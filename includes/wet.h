@@ -6,9 +6,9 @@
 #ifndef WET_H
 #define WET_H
 
-
 #include <stdint.h>
-
+#include <stdbool.h>
+#include <stddef.h>
 
 // ----------------------------------------------------------------------
 //  Pegando a plataforma alvo e definindo as macros de plataforma

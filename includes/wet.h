@@ -1,5 +1,6 @@
 //
 //  Arquivo principal da WetLib
+//  feitor por Hayano
 //
 
 #ifndef WET_H
@@ -91,7 +92,5 @@ typedef struct {
     uint8 b;
     uint8 a;
 } Color;
-
-
 
 #endif

@@ -25,7 +25,10 @@ set flags=
 
 if "%mode%"=="release" (
     set flags=-O3 -DWET_RELEASE
-) else if "%mode%"=="release" (
+) else if "%mode%"=="debug" (
+    set flags=-g -DWET_DEBUG
+) else (
+    echo NÃO INDENTIFICADO SE É UM DEBUG OU RELEASE DA WETLIB
     set flags=-g -DWET_DEBUG
 )
 

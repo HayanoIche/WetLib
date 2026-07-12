@@ -1,8 +1,7 @@
-#include "stdio.h"
-#include "../includes/wet.h"
-#include "../includes/wet/log.h"
+#include "wet.h"
+#include "wet/log.h"
 
 int main()
 {
-    LOG_INFO("");
+    LOG_INFO("Log funcionando!");
 }

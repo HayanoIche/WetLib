@@ -1,2 +1,2 @@
 # WetLib
-Projeto de uma biblioteca de C para gráficos e jogos
+Projeto de uma biblioteca de C para gráficos, jogos, e utilidades gerais

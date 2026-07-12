@@ -1,6 +1,6 @@
 //
 //  Arquivo pertencente de um sub-header da WetLib
-//  feitor por Hayano
+//  feito por Hayano
 //
 
 #ifndef WET_LOG

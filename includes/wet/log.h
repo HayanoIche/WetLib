@@ -6,7 +6,6 @@
 #ifndef WET_LOG
 #define WET_LOG
 
-
 // Leveis de log
 typedef enum {
     WET_LOG_LEVEL_INFO,

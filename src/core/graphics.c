@@ -7,9 +7,16 @@
 // ----------------------------------------------------------------------
 
 #if defined(WET_PLATFORM_WINDOWS)
-    // Funções do ciclo de vida
-    bool win32_opengl_graphics_init();
-    bool win32_opengl_graphics_shut();
+
+    //OpenGL
+    {
+        // Funções do ciclo de vida
+        bool win32_opengl_graphics_init();
+        bool win32_opengl_graphics_shut();
+
+        // Função de carregamento das funções
+        void* win32_opengl_get_proc_address(const char* procname);
+    }
 
     // Funções do vulkan e directx
 

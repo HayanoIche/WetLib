@@ -10,7 +10,14 @@
 #include "wet/window.h"
 
 static bool window_running = true;
-HWND window;
+
+static HWND window = NULL;
+static HDC hdc = NULL;
+static HGLRC hglrc = NULL;
+
+// ----------------------------------------------------------------------
+//  Funções pra manejar a janela do win32
+// ----------------------------------------------------------------------
 
 // Callback do windows
 LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
@@ -91,6 +98,51 @@ void win32_window_destroy(void) {};
 bool win32_window_should_close(void)
 {
     return !window_running;
+}
+
+// ----------------------------------------------------------------------
+//  Implementação das funções do OPENGL
+// ----------------------------------------------------------------------
+
+bool win32_opengl_graphics_init(void) 
+{
+    hdc = GetDC(g_hwnd);
+
+    PIXELFORMATDESCRIPTOR pfd = {
+        .nSize = sizeof(PIXELFORMATDESCRIPTOR),
+        .nVersion = 1,
+        .dwFlags = PFD_DRAW_TO_WINDOW | PFD_SUPPORT_OPENGL | PFD_DOUBLEBUFFER,
+        .iPixelType = PFD_TYPE_RGBA,
+        .cColorBits = 32,
+        .cDepthBits = 24,
+        .cStencilBits = 8,
+        .iLayerType = PFD_MAIN_PLANE
+    };
+
+    int pixelFormat = ChoosePixelFormat(hdc, &pfd);
+    SetPixelFormat(hdc, pixelFormat, &pfd);
+
+    // CRIA O CONTEXTO OPENGL REAL DO WINDOWS
+    hglrc = wglCreateContext(hdc);
+    if (!hglrc) return false;
+
+    // Faz o contexto ficar ativo na nossa thread atual
+    wglMakeCurrent(hdc, hglrc);
+
+    return true;
+}
+
+void* win32_opengl_get_proc_address(const char* procname)
+{
+    void* p = (void*)wglGetProcAddress(procname);
+
+    if (p == 0 || (p == (void*)0x1) || (p == (void*)0x2) || (p == (void*)0x3) || (p == (void*)-1))
+    {
+        HMODULE module = LoadLibraryA("opengl32.dll");
+        p = (void*)GetProcAddress(module, procname);
+    }
+    
+    return p;
 }
 
 #endif

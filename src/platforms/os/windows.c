@@ -48,6 +48,7 @@ bool win32_window_create(WindowConfig config)
     wc.hIcon = LoadIcon(instance, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.lpszClassName = config.title;
+    wc.hbrBackground = NULL;
     wc.lpfnWndProc = win32_process_message; // Callback pros inputs
 
     if (!RegisterClassA(&wc))
@@ -91,6 +92,8 @@ void win32_window_update(void)
         TranslateMessage(&msg);
         DispatchMessageA(&msg); //Chama o callback que foi especificado quando criamos a janela
     }
+
+    SwapBuffers(hdc);
 };
 
 void win32_window_destroy(void) {};
@@ -135,13 +138,14 @@ bool win32_opengl_graphics_init(void)
 void* win32_opengl_get_proc_address(const char* procname)
 {
     void* p = (void*)wglGetProcAddress(procname);
-
     if (p == 0 || (p == (void*)0x1) || (p == (void*)0x2) || (p == (void*)0x3) || (p == (void*)-1))
     {
-        HMODULE module = LoadLibraryA("opengl32.dll");
+        static HMODULE module = NULL;
+        if (module == NULL) {
+            module = LoadLibraryA("opengl32.dll");
+        }
         p = (void*)GetProcAddress(module, procname);
     }
-
     return p;
 }
 

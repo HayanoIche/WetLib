@@ -16,7 +16,9 @@ echo WetLib - Iniciando compilacao
 
 :: Arquivos a compilar, includes e flags ::
 set files=^
-        src/core/log.c
+        src/core/log.c^
+        src/core/window.c^
+        src/platforms/os/windows.c
 
 
 set includes=-Iincludes

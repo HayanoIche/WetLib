@@ -92,3 +92,67 @@ static void wait_time(double seconds)
     #endif
 }
 
+
+// ----------------------------------------------------------------------
+//  Implementação das funções de tempo
+// ----------------------------------------------------------------------
+
+
+// Ciclo de vida
+// Iniciando o contador de tempo
+void time_init(void)
+{
+    #if defined(WET_PLATFORM_WINDOWS)
+        //
+        //      Essa função do <mmsystem.h> serve pra dar mais
+        //  precisão pro sleep (precisão de 1 milissegundo)
+        //
+        timeBeginPeriod(1);
+
+    #endif
+        time_manager.lastProgressTime = get_time_in_seconds();
+}
+
+
+// Finalizando o contador de tempo
+void time_shut(void)
+{
+    #if defined(WET_PLATFORM_WINDOWS)
+        // Desliga aquela alta precisão do sleep ao fechar o programa
+        timeEndPeriod(1);
+    #endif
+}
+
+
+// Time update
+
+
+// Funções pra pegar os parametros do time manager
+
+// Função pra settar o FPS máximo que o programa pode ter (o fps alvo)
+void fps_set_target(uint16 fps)
+{
+    if (fps <= 0)
+    {
+        time_manager.target_time = 0.0;
+        LOG_WARN(" O fps foi settado pra 0");
+    }
+    else
+    {
+        time_manager.target_time = 1.0 / (float64)fps;
+    }
+}
+
+
+// Função que pega qual o FPS alvo atual
+uint16 fps_get_target(void) { return time_manager.target_time; }
+
+// Função que pega qual o FPS atual do programa
+uint16 fps_get(void) { return time_manager.fps; }
+
+// Função que pega qual o FPS que a janela poderia ter sem o limitador
+uint16 fps_real_get(void) { return time_manager.fps_real; }
+
+// Função que pega o delta time
+float64 delta_time_get(void) { return time_manager.delta_time; }
+

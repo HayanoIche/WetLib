@@ -16,13 +16,14 @@ echo WetLib - Iniciando compilacao
 
 :: Arquivos a compilar, includes e flags ::
 set files=^
-        src/thirdparty/glad/glad.c^
+        src/thirdparty/glad/src/glad.c^
         src/core/log.c^
         src/core/window.c^
-        src/platforms/os/windows.c
+        src/platforms/os/windows.c^
+        src/core/graphics.c
 
 
-set includes=-Iincludes -Isrc/thirdparty/glad/includes
+set includes=-Iincludes -I./src/thirdparty/glad/include
 set flags=
 
 

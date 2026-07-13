@@ -1,4 +1,5 @@
 @echo off
 cls
 
-gcc -DWET_DEBUG main.c ../output/libwet.a -I../includes -o test.exe
+
+gcc main.c ../output/libwet.a -I../includes -o test.exe -lopengl32 -lgdi32 -DWET_DEBUG

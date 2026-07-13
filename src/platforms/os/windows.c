@@ -106,7 +106,7 @@ bool win32_window_should_close(void)
 
 bool win32_opengl_graphics_init(void) 
 {
-    hdc = GetDC(g_hwnd);
+    hdc = GetDC(window);
 
     PIXELFORMATDESCRIPTOR pfd = {
         .nSize = sizeof(PIXELFORMATDESCRIPTOR),
@@ -141,7 +141,7 @@ void* win32_opengl_get_proc_address(const char* procname)
         HMODULE module = LoadLibraryA("opengl32.dll");
         p = (void*)GetProcAddress(module, procname);
     }
-    
+
     return p;
 }
 

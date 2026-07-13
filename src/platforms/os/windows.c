@@ -9,6 +9,28 @@
 #include "wet/log.h"
 #include "wet/window.h"
 
+static bool window_running = true;
+HWND window;
+
+// Callback do windows
+LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
+    switch (msg)
+    {
+        case WM_CLOSE:
+            window_running = false;
+            DestroyWindow(hwnd);
+            return 0;
+
+        case WM_DESTROY:
+            PostQuitMessage(0);
+            return 0;
+    }
+    
+    // Qualquer mensagem que a gente não tratar, deixa o Windows resolver do jeito padrão
+    return DefWindowProcA(hwnd, msg, wparam, lparam);
+}
+
 // Função que cria a janela no windows com o win32
 bool win32_window_create(WindowConfig config)
 {
@@ -19,7 +41,7 @@ bool win32_window_create(WindowConfig config)
     wc.hIcon = LoadIcon(instance, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.lpszClassName = config.title;
-    wc.lpfnWndProc = DefWindowProcA;
+    wc.lpfnWndProc = win32_process_message; // Callback pros inputs
 
     if (!RegisterClassA(&wc))
     {
@@ -29,7 +51,7 @@ bool win32_window_create(WindowConfig config)
 
     int dwStyle = WS_OVERLAPPEDWINDOW;
 
-    HWND window = CreateWindowExA(
+    window = CreateWindowExA(
                     0,
                     config.title,
                     config.title,
@@ -53,9 +75,22 @@ bool win32_window_create(WindowConfig config)
     return true;
 }
 
-void win32_window_update(void) {};
+void win32_window_update(void)
+{
+    MSG msg;
+
+    while(PeekMessageA(&msg, window, 0, 0, PM_REMOVE))
+    {
+        TranslateMessage(&msg);
+        DispatchMessageA(&msg); //Chama o callback que foi especificado quando criamos a janela
+    }
+};
+
 void win32_window_destroy(void) {};
 
-bool win32_window_should_close(void) {return false;}
+bool win32_window_should_close(void)
+{
+    return !window_running;
+}
 
 #endif

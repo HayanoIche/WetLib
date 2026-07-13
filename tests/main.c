@@ -13,8 +13,11 @@ int main()
         LOG_ERROR("falha na janela!");
     }
 
-    while(true)
+    while (!window_should_close())
     {
-        
+        window_update();
     }
+
+    window_destroy();
+    LOG_INFO("Jogo finalizado com sucesso!");
 }

@@ -22,7 +22,7 @@ typedef enum {
 
 // Funções do ciclo de vida
 bool graphics_init(GraphicsAPI api);
-bool graphics_shut(void);
+void graphics_shut(void);
 
 bool graphics_change_api(GraphicsAPI api);
 void graphics_clear_screen(Color color);

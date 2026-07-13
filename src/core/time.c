@@ -1,4 +1,5 @@
 #include "wet.h"
+#include "wet/log.h"
 #include "wet/time.h"
 
 #if defined(WET_PLATFORM_WINDOWS)
@@ -110,7 +111,7 @@ void time_init(void)
         timeBeginPeriod(1);
 
     #endif
-        time_manager.lastProgressTime = get_time_in_seconds();
+        time_manager.last_progress_time = get_time_in_seconds();
 }
 
 
@@ -124,7 +125,56 @@ void time_shut(void)
 }
 
 
-// Time update
+// Da o update de cada frame
+void time_update(void)
+{
+    float64 current_time = get_time_in_seconds();
+
+    // Processamento do frame passado
+    if (time_manager.start_time != 0.0) // Pra ignorar se for o primeiro frame (n existe frame passado)
+    {
+        // Pegando quantos segundos a CPU e a GPU gastaram executando o frame anterior
+        float64 cpu_time = current_time - time_manager.start_time;
+
+        // Impedindo a divisão por zero se o tempo gasto for perto de 0
+        if (cpu_time < 0.00001) { cpu_time = 0.00001; }
+
+        time_manager.fps_real_sum += (1.0 / cpu_time);
+        time_manager.frame_count++;
+
+        if (cpu_time < time_manager.target_time)
+        {
+            float64 time_to_wait = time_manager.target_time - cpu_time;
+            
+            wait_time(time_to_wait);
+            
+            current_time = get_time_in_seconds(); 
+        }
+    }
+
+    // Processamento desse frame
+    time_manager.start_time = current_time;
+    
+    // Calculo do DELTA TIME
+    if (time_manager.previous_time == 0.0)
+    {
+        time_manager.delta_time = 0.0;
+    } else {
+        time_manager.delta_time = time_manager.start_time - time_manager.previous_time;
+    }
+
+    time_manager.previous_time = time_manager.start_time;
+
+    if (current_time - time_manager.last_progress_time >= 1.0)
+    {
+        time_manager.fps = time_manager.frame_count;
+        time_manager.fps_real = (uint16) (time_manager.fps_real_sum / time_manager.frame_count);
+        
+        time_manager.frame_count = 0;
+        time_manager.fps_real_sum = 0.0;
+        time_manager.last_progress_time = current_time;
+    }
+}
 
 
 // Funções pra pegar os parametros do time manager

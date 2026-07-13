@@ -21,7 +21,8 @@ set files=^
         src/core/window.c^
         src/platforms/os/windows.c^
         src/core/graphics.c^
-        src/platforms/gfx/opengl.c
+        src/platforms/gfx/opengl.c^
+        src/core/time.c
 
 
 set includes=-Iincludes -I./src/thirdparty/glad/include

@@ -22,6 +22,6 @@ uint16 fps_real_get(void);
 
 float64 delta_time_get(void); // Pra pegar o deltatime
 
-#define delta_time time_get_delta() // Macro pra pegar o delta_time
+#define DELTA_TIME delta_time_get() // Macro pra pegar o delta_time
 
 #endif

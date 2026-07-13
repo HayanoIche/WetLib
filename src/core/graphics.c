@@ -6,26 +6,15 @@
 //  Declarando as funções específicas de plataforma
 // ----------------------------------------------------------------------
 
-#if defined(WET_PLATFORM_WINDOWS)
+//  OPEN GL
+    bool opengl_init(void);
+    void opengl_shut(void);
 
-    //OpenGL
-    {
-        // Funções do ciclo de vida
-        bool win32_opengl_graphics_init();
-        bool win32_opengl_graphics_shut();
+    void opengl_clear_screen(Color color);
 
-        // Função de carregamento das funções
-        void* win32_opengl_get_proc_address(const char* procname);
-    }
+//  VULKAN
 
-    // Funções do vulkan e directx
-
-#elif defined(WET_PLATFORM_LINUX)
-    // Funções de gráfico implementadas pro linux
-#elif defined(WET_PLATFORM_MACOS)
-    // Funções de gráfico implementadas pro MacOs
-#endif
-
+//  DIRECTX
 
 // ----------------------------------------------------------------------
 //  Implementando as funções gerais de ponteiro
@@ -34,26 +23,26 @@
 // Funções do ciclo de vida
 bool graphics_init(GraphicsAPI api)
 {
-    switch(api)
-    {
-        case WET_GRAPHICS_API_OPENGL:
-            return win32_opengl_graphics_init();
-            break;
-        
-        case WET_GRAPHICS_API_VULKAN:
-            return false;
-            break;
+    if (api == WET_GRAPHICS_API_OPENGL) return opengl_init();
+    //if (api == WET_GRAPHICS_API_VULKAN) return false;
+    //if (api == WET_GRAPHICS_API_DIRECTX) return false;
 
-        case WET_GRAPHICS_API_DIRECTX:
-            #if defined(WET_PLATFORM_WINDOWS)
-                // Retornar a função do directX
-                return false;
-            #else
-                LOG_FATAL("A API DE GRÁFICOS DIRECTX NÃO ESTÁ DISPONÍVEL NESSE SISTEMA OPERACIONAL");
-            #endif
-            break;
-    }
+    return false;
 }
 
-void graphics_shut(void) {};
-bool graphics_change_api(GraphicsAPI api) {return false};
+void graphics_shut(void)
+{
+    //if (api == WET_GRAPHICS_API_OPENGL) return opengl_shut();
+    //if (api == WET_GRAPHICS_API_VULKAN) {};
+    //if (api == WET_GRAPHICS_API_DIRECTX) {};
+};
+
+bool graphics_change_api(GraphicsAPI api) { return false; } // A ser implementado
+
+void graphics_clear_screen(Color color)
+{
+    opengl_clear_screen(color);
+    //if (api == WET_GRAPHICS_API_OPENGL) opengl_clear_screen();
+    //if (api == WET_GRAPHICS_API_VULKAN) {};
+    //if (api == WET_GRAPHICS_API_DIRECTX) {};
+}

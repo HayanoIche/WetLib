@@ -20,7 +20,8 @@ set files=^
         src/core/log.c^
         src/core/window.c^
         src/platforms/os/windows.c^
-        src/core/graphics.c
+        src/core/graphics.c^
+        src/platforms/gfx/opengl.c
 
 
 set includes=-Iincludes -I./src/thirdparty/glad/include

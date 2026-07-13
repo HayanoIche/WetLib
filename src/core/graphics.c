@@ -38,11 +38,12 @@ bool graphics_init(GraphicsAPI api)
             break;
 
         case WET_GRAPHICS_API_DIRECTX:
-            #ifdef defined(WET_PLATFORM_WINDOWS)
+            #if defined(WET_PLATFORM_WINDOWS)
                 // Retornar a função do directX
                 return false;
             #else
                 LOG_FATAL("A API DE GRÁFICOS DIRECTX NÃO ESTÁ DISPONÍVEL NESSE SISTEMA OPERACIONAL");
+            #endif
             break;
     }
 }

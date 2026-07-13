@@ -10,8 +10,8 @@
 
 // Estrutura básica de configuração da janela
 typedef struct {
-    uint8 width;
-    uint8 height;
+    uint16 width;
+    uint16 height;
     const char* title;
     bool fullscreen;
 } WindowConfig;

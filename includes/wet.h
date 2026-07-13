@@ -86,6 +86,11 @@ typedef struct {
     int32 y2;
 } Recti;
 
+
+// ----------------------------------------------------------------------
+//  Cores
+// ----------------------------------------------------------------------
+
 // Struct para cores
 typedef struct {
     uint8 r;
@@ -93,5 +98,28 @@ typedef struct {
     uint8 b;
     uint8 a;
 } Color;
+
+// Função pra criar cores
+static inline Color make_color_rgb(uint8 r, uint8 g, uint8 b)
+{
+    Color c = {r, g, b, 255};
+    return c;
+}
+
+static inline Color make_color_rgba(uint8 r, uint8 g, uint8 b, uint8 a)
+{
+    Color c = {r, g, b, a};
+    return c;
+}
+
+static inline Color make_color_hex(uint32 hex)
+{
+    Color c;
+    c.r = (hex >> 16) & 0xFF;
+    c.g = (hex >> 8)  & 0xFF;
+    c.b = hex         & 0xFF;
+    c.a = 255;
+    return c;
+}
 
 #endif

@@ -21,6 +21,10 @@ int main()
         time_update();
         window_update();
 
+        LOG_CLEAN();
+
+        LOG_INFO(" - WETLIB - \n\n");
+
         LOG_INFO("delta time: %f", DELTA_TIME);
         LOG_INFO("FPS: %d", fps_get());
         LOG_INFO("FPS REAL: %d", fps_real_get());

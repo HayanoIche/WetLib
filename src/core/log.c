@@ -54,4 +54,9 @@ void log_print(WetLogLevel level, const char* message, ...)
     printf("\033[0m\n");
 }
 
+void log_clear_terminal(void)
+{
+    printf("\033[2J\033[H");
+    fflush(stdout);
+}
 

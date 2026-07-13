@@ -9,11 +9,12 @@
 #include "wet.h"
 
 // ENUM com as API's
-enum GraphicsAPI {
+
+typedef enum {
     WET_GRAPHICS_API_OPENGL,
     WET_GRAPHICS_API_VULKAN,
     WET_GRAPHICS_API_DIRECTX
-};
+} GraphicsAPI;
 
 // ----------------------------------------------------------------------
 //  Funções pro gráfico
@@ -24,3 +25,6 @@ bool graphics_init(GraphicsAPI api);
 bool graphics_shut(void);
 
 bool graphics_change_api(GraphicsAPI api);
+void graphics_clear_screen(Color color);
+
+#endif

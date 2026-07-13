@@ -21,6 +21,6 @@ enum GraphicsAPI {
 
 // Funções do ciclo de vida
 bool graphics_init(GraphicsAPI api);
-bool graphics_shut();
+bool graphics_shut(void);
 
 bool graphics_change_api(GraphicsAPI api);

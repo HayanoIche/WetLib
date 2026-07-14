@@ -47,6 +47,8 @@ bool opengl_init(void)
         LOG_FATAL("CONEXÃO COM A JANELA DO MACOS AINDA NÃO IMPLEMENTADA");
         return false;
     #endif
+
+    
 }
 
 void opengl_clear_screen(Color color)
@@ -94,3 +96,19 @@ static const char* default_fragment_sh_source =
 "void main() {\n"
 "    FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"\
 "}\n";
+
+
+// -----------------------------------------------
+//  Funções auxiliares
+// -----------------------------------------------
+
+// Essa função basicamente compila os shaders na GPU
+static uint32 compile_shader(uint32 type, const char* source)
+{
+    // Compilando o shaders
+    unit32 id = glCreateShader(type);       // Criando ele na GPU
+    glShaderSource(id, 1, &source, NULL);   // Embutindo a string do shaders dentro do shader da GPU
+    glCompileShader(id);                    // Compila o shader em si
+
+    return id;
+}

@@ -59,3 +59,38 @@ void opengl_clear_screen(Color color)
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
+
+
+// ----------------------------------------------------------------------
+//                              Shaders
+// ----------------------------------------------------------------------
+
+// -----------------------------------------------
+//  OpenGL Renderer
+// -----------------------------------------------
+
+typedef struct {
+    uint32 default_shader_program;
+} OpenGLRenderer;
+
+static OpenGLRenderer open_gl_renderer = { 0 };
+
+// -----------------------------------------------
+//  Shaders default imbutidos na biblioteca
+// -----------------------------------------------
+
+// Vertex shader padrão
+static const char* default_vertex_sh_source = 
+"#version 330 core\n"
+"layout (location = 0) in vec3 aPos;\n"
+"void main() {\n"
+"    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
+"}\n";
+
+// Fragment shader padrão
+static const char* default_fragment_sh_source = 
+"#version 330 core\n"
+"out vec4 FragColor;\n"
+"void main() {\n"
+"    FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"\
+"}\n";

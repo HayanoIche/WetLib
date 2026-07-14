@@ -14,22 +14,17 @@ int main()
 
     if (!graphics_init(WET_GRAPHICS_API_OPENGL)) { return -1; }
 
-    Color bg_color = {76, 100, 140, 255};
-
     while (!window_should_close())
     {
-        
         window_update();
 
         LOG_CLEAN();
-
         LOG_INFO(" - WETLIB - \n\n");
-
         LOG_INFO("delta time: %f", DELTA_TIME);
         LOG_INFO("FPS: %d", fps_get());
         LOG_INFO("FPS REAL: %d", fps_real_get());
         
-        graphics_clear_screen(bg_color);
+        graphics_clear_screen(make_color_rgb(0, 100, 140));
     }
 
     graphics_shut();

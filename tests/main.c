@@ -9,7 +9,7 @@ int main()
     WindowConfig config = {690, 690, "janela teste", false};
     if (window_create(config) == false) { LOG_ERROR("falha na janela!"); }
 
-    time_init();
+    
     fps_set_target(60);
 
     if (!graphics_init(WET_GRAPHICS_API_OPENGL)) { return -1; }
@@ -18,7 +18,7 @@ int main()
 
     while (!window_should_close())
     {
-        time_update();
+        
         window_update();
 
         LOG_CLEAN();
@@ -32,7 +32,6 @@ int main()
         graphics_clear_screen(bg_color);
     }
 
-    time_shut();
     graphics_shut();
     window_destroy();
 

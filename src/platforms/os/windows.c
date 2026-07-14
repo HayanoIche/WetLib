@@ -8,6 +8,7 @@
 #include <windows.h>
 #include "wet/log.h"
 #include "wet/window.h"
+#include "wet/time.h"
 
 static bool window_running = true;
 
@@ -80,11 +81,18 @@ bool win32_window_create(WindowConfig config)
 
     ShowWindow(window, SW_SHOW);
     
+    // Iniciando o contador de tempo
+    time_init();
+
     return true;
 }
 
 void win32_window_update(void)
 {
+    // Updatando o tempo
+    time_update();
+
+    // Window
     MSG msg;
 
     while(PeekMessageA(&msg, window, 0, 0, PM_REMOVE))
@@ -96,7 +104,11 @@ void win32_window_update(void)
     SwapBuffers(hdc);
 };
 
-void win32_window_destroy(void) {};
+void win32_window_destroy(void)
+{
+    // Acabando com o contador de tempo
+    time_shut();
+};
 
 bool win32_window_should_close(void)
 {

@@ -237,5 +237,10 @@ void opengl_shut(void)
     {
         glDeleteProgram(open_gl_renderer.default_shader_program);
     }
+    
+    // Deletando o Quad
+    glDeleteVertexArrays(1, &open_gl_renderer.quad_vao);
+    glDeleteBuffers(1, &open_gl_renderer.quad_vbo);
+    glDeleteBuffers(1, &open_gl_renderer.quad_ebo);
 }
 

@@ -27,4 +27,6 @@ void graphics_shut(void);
 bool graphics_change_api(GraphicsAPI api);
 void graphics_clear_screen(Color color);
 
+void graphics_on_resize(uint32 w, uint32 h);
+
 #endif

@@ -14,6 +14,8 @@ static GraphicsAPI graphics_api;
 
     void opengl_clear_screen(Color color);
 
+    void opengl_on_resize(uint32 w, uint32 h);
+    
 //  VULKAN
 
 //  DIRECTX
@@ -54,5 +56,13 @@ void graphics_clear_screen(Color color)
     if (graphics_api == WET_GRAPHICS_API_OPENGL)
     {
         opengl_clear_screen(color);
+    }
+}
+
+void graphics_on_resize(uint32 w, uint32 h)
+{
+    if (graphics_api == WET_GRAPHICS_API_OPENGL)
+    {
+        return opengl_on_resize(w, h);
     }
 }

@@ -8,6 +8,7 @@
 #include <windows.h>
 #include "wet/log.h"
 #include "wet/window.h"
+#include "wet/graphics.h"
 #include "wet/time.h"
 
 static bool window_running = true;
@@ -29,10 +30,20 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARA
             window_running = false;
             DestroyWindow(hwnd);
             return 0;
+            break;
 
         case WM_DESTROY:
             PostQuitMessage(0);
             return 0;
+            break;
+
+        case WM_SIZE: {
+                uint32 width = LOWORD(lparam);
+                uint32 height = HIWORD(lparam);
+                
+                graphics_on_resize(width, height);
+                break;
+            }
     }
     
     // Qualquer mensagem que a gente não tratar, deixa o Windows resolver do jeito padrão
@@ -101,7 +112,7 @@ void win32_window_update(void)
         TranslateMessage(&msg);
         DispatchMessageA(&msg); //Chama o callback que foi especificado quando criamos a janela
     }
-
+    
     SwapBuffers(hdc);
 };
 

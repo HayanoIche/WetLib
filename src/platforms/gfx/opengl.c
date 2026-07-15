@@ -31,7 +31,7 @@ typedef struct {
 } OpenGLRenderer;
 
 static OpenGLRenderer open_gl_renderer = { 0 };
-
+static bool opengl_started = false;
 
 // ----------------------------------------------------------------------
 //                              Shaders
@@ -204,6 +204,9 @@ bool opengl_init(void)
 
         LOG_INFO("OpenGL moderno e GLAD inicializados com SUCESSO!");
         
+        opengl_started = true;
+        LOG_INFO("%d", opengl_started);
+        
     #elif defined(WET_PLATFORM_LINUX)
         LOG_FATAL("CONEXÃO COM A JANELA DO LINUX AINDA NÃO IMPLEMENTADA");
         return false;
@@ -237,10 +240,18 @@ void opengl_shut(void)
     {
         glDeleteProgram(open_gl_renderer.default_shader_program);
     }
-    
+
     // Deletando o Quad
     glDeleteVertexArrays(1, &open_gl_renderer.quad_vao);
     glDeleteBuffers(1, &open_gl_renderer.quad_vbo);
     glDeleteBuffers(1, &open_gl_renderer.quad_ebo);
 }
 
+void opengl_on_resize(uint32 w, uint32 h)
+{
+    if (opengl_started)
+    {
+        LOG_INFO("JANELA REDIMENSIONADA");
+        // a Implementar
+    }
+}

@@ -16,56 +16,6 @@
     // Funções pra carregar o openGL no MacOS
 #endif
 
-// ----------------------------------------------------------------------
-//  Implementando as funções do open GL
-// ----------------------------------------------------------------------
-
-// Função que inicia o openGL
-bool opengl_init(void)
-{
-    #if defined(WET_PLATFORM_WINDOWS)
-        // NO WINDOWS
-        if (!win32_opengl_graphics_init())
-        {
-            LOG_FATAL("FALHA AO INICIALIZAR O CONTEXTO OPENGL NO WINDOWS!");
-            return false;
-        }
-
-        if (!gladLoadGLLoader((GLADloadproc)win32_opengl_get_proc_address)) 
-        {
-            LOG_FATAL("FALHA AO CARREGAR OS PONTEIROS DO OPENGL COM O GLAD!");
-            return false;
-        }
-
-        LOG_INFO("OpenGL moderno e GLAD inicializados com SUCESSO!");
-        return true;
-
-    #elif defined(WET_PLATFORM_LINUX)
-        LOG_FATAL("CONEXÃO COM A JANELA DO LINUX AINDA NÃO IMPLEMENTADA");
-        return false;
-    #elif defined (WET_PLATFORM_MACOS)
-        LOG_FATAL("CONEXÃO COM A JANELA DO MACOS AINDA NÃO IMPLEMENTADA");
-        return false;
-    #endif
-
-    
-}
-
-void opengl_clear_screen(Color color)
-{
-    float32 r = (float32)color.r / 255.0f;
-    float32 g = (float32)color.g / 255.0f;
-    float32 b = (float32)color.b / 255.0f;
-    float32 a = (float32)color.a / 255.0f;
-
-    glClearColor(r, g, b, a);
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-}
-
-
-// ----------------------------------------------------------------------
-//                              Shaders
-// ----------------------------------------------------------------------
 
 // -----------------------------------------------
 //  OpenGL Renderer
@@ -76,6 +26,11 @@ typedef struct {
 } OpenGLRenderer;
 
 static OpenGLRenderer open_gl_renderer = { 0 };
+
+
+// ----------------------------------------------------------------------
+//                              Shaders
+// ----------------------------------------------------------------------
 
 // -----------------------------------------------
 //  Shaders default imbutidos na biblioteca
@@ -105,9 +60,10 @@ static const char* default_fragment_sh_source =
 // Essa função basicamente compila os shaders na GPU
 static uint32 compile_shader(uint32 type, const char* source)
 {
+    uint32 id = glCreateShader(type);       // Criando ele na GPU
+
     // Compilando o shaders
     {
-        unit32 id = glCreateShader(type);       // Criando ele na GPU
         glShaderSource(id, 1, &source, NULL);   // Embutindo a string do shaders dentro do shader da GPU
         glCompileShader(id);                    // Compila o shader em si
     }
@@ -151,3 +107,79 @@ static uint32 compile_shader(uint32 type, const char* source)
     // Retornando o shaders
     return id;
 }
+
+// Função secreta deste arquivo para linkar os shaders
+static uint32 create_shader_program(const char* vertex_src, const char* fragment_src)
+{
+    uint32 program = glCreateProgram();
+    uint32 vs = compile_shader(GL_VERTEX_SHADER, vertex_src);
+    uint32 fs = compile_shader(GL_FRAGMENT_SHADER, fragment_src);
+
+    glAttachShader(program, vs);
+    glAttachShader(program, fs);
+    glLinkProgram(program);
+    glValidateProgram(program);
+
+    glDeleteShader(vs);
+    glDeleteShader(fs);
+
+    return program;
+}
+
+
+// ----------------------------------------------------------------------
+//  Implementando as funções do open GL
+// ----------------------------------------------------------------------
+
+// Função que inicia o openGL
+bool opengl_init(void)
+{
+    #if defined(WET_PLATFORM_WINDOWS)
+        // NO WINDOWS
+        if (!win32_opengl_graphics_init())
+        {
+            LOG_FATAL("FALHA AO INICIALIZAR O CONTEXTO OPENGL NO WINDOWS!");
+            return false;
+        }
+
+        if (!gladLoadGLLoader((GLADloadproc)win32_opengl_get_proc_address)) 
+        {
+            LOG_FATAL("FALHA AO CARREGAR OS PONTEIROS DO OPENGL COM O GLAD!");
+            return false;
+        }
+
+        LOG_INFO("OpenGL moderno e GLAD inicializados com SUCESSO!");
+        
+    #elif defined(WET_PLATFORM_LINUX)
+        LOG_FATAL("CONEXÃO COM A JANELA DO LINUX AINDA NÃO IMPLEMENTADA");
+        return false;
+    #elif defined (WET_PLATFORM_MACOS)
+        LOG_FATAL("CONEXÃO COM A JANELA DO MACOS AINDA NÃO IMPLEMENTADA");
+        return false;
+    #endif
+
+    open_gl_renderer.default_shader_program = create_shader_program(default_vertex_sh_source, default_fragment_sh_source);
+    LOG_INFO("[OPEN GL] Pipeline de Shaders default inicializado com sucesso! ID: %u\n", open_gl_renderer.default_shader_program);
+
+    return true;
+}
+
+void opengl_clear_screen(Color color)
+{
+    float32 r = (float32)color.r / 255.0f;
+    float32 g = (float32)color.g / 255.0f;
+    float32 b = (float32)color.b / 255.0f;
+    float32 a = (float32)color.a / 255.0f;
+
+    glClearColor(r, g, b, a);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void opengl_shut(void)
+{
+    if (open_gl_renderer.default_shader_program != 0)
+    {
+        glDeleteProgram(open_gl_renderer.default_shader_program);
+    }
+}
+

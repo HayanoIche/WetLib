@@ -16,7 +16,7 @@ int main()
     while (!window_should_close())
     {
         window_update();
-        graphics_clear_screen(make_color_rgb(0, 100, 140));
+        graphics_clear_screen(make_color_rgb(200, 140, 140));
     }
 
     graphics_shut();

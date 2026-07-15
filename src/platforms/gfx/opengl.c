@@ -23,6 +23,11 @@
 
 typedef struct {
     uint32 default_shader_program;
+
+    // Quad
+    uint32 quad_vao;
+    uint32 quad_vbo;
+    uint32 quad_ebo;
 } OpenGLRenderer;
 
 static OpenGLRenderer open_gl_renderer = { 0 };
@@ -127,6 +132,55 @@ static uint32 create_shader_program(const char* vertex_src, const char* fragment
 }
 
 
+// -----------------------------------------------
+//  Quad
+// -----------------------------------------------
+
+static void opengl_init_quad(void)
+{
+    float32 vertices[] =
+    {
+         0.5f,  0.5f, 0.0f,
+         0.5f, -0.5f, 0.0f,
+        -0.5f, -0.5f, 0.0f,
+        -0.5f,  0.5f, 0.0f
+    };
+
+    uint32 indices[] =
+    {
+        0, 1, 3,
+        1, 2, 3
+    };
+    
+    // Criando o VAO, VBO, e EBO na gpu
+    glGenVertexArrays(1, &open_gl_renderer.quad_vao);
+    glGenBuffers(1, &open_gl_renderer.quad_vbo);
+    glGenBuffers(1, &open_gl_renderer.quad_ebo);
+
+    // Conectando ao VAO
+    glBindVertexArray(open_gl_renderer.quad_vao);
+
+    // Iniciando o VAO
+    {
+        // Configurando o VBO
+        // Basicamente enviando os vértices para a GPU
+        glBindBuffer(GL_ARRAY_BUFFER, open_gl_renderer.quad_vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+        // Configurando o EBO
+        // Basicamente enviando os índices de conexão dos triângulos para a GPU
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, open_gl_renderer.quad_ebo);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+        // O Ponteiro de Atributos
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0); // Ativa o atributo da posição 0
+    }
+    
+    // Desconectando do VAO
+    glBindVertexArray(0);
+}
+
 // ----------------------------------------------------------------------
 //  Implementando as funções do open GL
 // ----------------------------------------------------------------------
@@ -159,8 +213,10 @@ bool opengl_init(void)
     #endif
 
     open_gl_renderer.default_shader_program = create_shader_program(default_vertex_sh_source, default_fragment_sh_source);
-    LOG_INFO("[OPEN GL] Pipeline de Shaders default inicializado com sucesso! ID: %u\n", open_gl_renderer.default_shader_program);
-
+    LOG_INFO("[OPEN GL] Pipeline de Shaders default inicializado com sucesso! ID: %u", open_gl_renderer.default_shader_program);
+    
+    opengl_init_quad();
+    LOG_INFO("[OPEN GL] Quad inicializado com sucesso!");
     return true;
 }
 

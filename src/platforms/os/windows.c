@@ -80,6 +80,7 @@ bool win32_window_create(WindowConfig config)
     }
 
     ShowWindow(window, SW_SHOW);
+    LOG_INFO("Janela do win32 inicializada com sucesso!");
     
     // Iniciando o contador de tempo
     time_init();

@@ -1,7 +1,8 @@
-#include "opengl.h"
 
 #include "wet.h"
 #include "wet/log.h"
+
+#include "opengl.h"
 
 // ----------------------------------------------------------------------
 //                              Shaders
@@ -97,7 +98,7 @@ static uint32 opengl_create_shader_program(const char* vertex_src, const char* f
 
     glDeleteShader(vs);
     glDeleteShader(fs);
-    
+
     return program;
 }
 

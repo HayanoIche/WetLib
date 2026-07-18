@@ -12,13 +12,3 @@ struct Surface {
     int32 width;
     int32 height;
 };
-
-Surface* surface_create(int32 width, int32 height)
-{
-    return NULL;
-}
-
-void surface_destroy(Surface* surface)
-{
-    return;
-}

@@ -16,7 +16,7 @@
 #elif defined(WET_PLATFORM_LINUX)
     // Funções de janela implementadas pro linux
 #elif defined(WET_PLATFORM_MACOS)
-// Funções de janela implementadas pro MacOs
+    // Funções de janela implementadas pro MacOs
 #endif
 
 // ----------------------------------------------------------------------

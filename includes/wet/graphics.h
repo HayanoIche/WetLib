@@ -8,13 +8,7 @@
 
 #include "wet.h"
 
-// ENUM com as API's
 
-typedef enum {
-    WET_GRAPHICS_API_OPENGL,
-    WET_GRAPHICS_API_VULKAN,
-    WET_GRAPHICS_API_DIRECTX
-} GraphicsAPI;
 
 // ----------------------------------------------------------------------
 //  Funções pro gráfico

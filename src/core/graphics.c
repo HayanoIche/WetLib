@@ -1,12 +1,20 @@
+
+// Aqui é onde fica a implementação das struct do graphics device
+
+/*
 #include "wet.h"
 #include "wet/graphics.h"
 #include "wet/log.h"
+
 
 // ----------------------------------------------------------------------
 //  Declarando as funções específicas de plataforma
 // ----------------------------------------------------------------------
 
 static GraphicsAPI graphics_api;
+
+
+
 
 //  OPEN GL
     bool opengl_init(void);
@@ -66,3 +74,4 @@ void graphics_on_resize(uint32 w, uint32 h)
         return opengl_on_resize(w, h);
     }
 }
+*/

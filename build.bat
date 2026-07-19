@@ -17,15 +17,24 @@ echo WetLib - Iniciando compilacao
 :: Arquivos a compilar, includes e flags ::
 set files=^
         src/thirdparty/glad/src/glad.c^
+        
         src/core/log.c^
         src/core/window.c^
-        src/platforms/os/windows.c^
-        src/core/graphics.c^
         src/core/time.c^
-        src/platforms/gfx/openGl/opengl_graphics.c^
-        src/platforms/gfx/openGl/opengl_quad.c^
-        src/platforms/gfx/openGl/opengl_shaders.c^
-        src/platforms/gfx/openGl/opengl_surface.c
+
+        src/core/draw.c^
+        src/core/graphics.c^
+        src/core/surface.c^
+        
+        src/core/render.c^
+        
+        src/platforms/os/windows.c^
+
+        src/platforms/renderer/openGl/opengl_graphics.c^
+        src/platforms/renderer/openGl/opengl_shaders.c^
+        src/platforms/renderer/openGl/opengl_surface.c^
+        src/platforms/renderer/openGl/opengl_quad.c
+
 
 
 set includes=-Iincludes -I./src/thirdparty/glad/include

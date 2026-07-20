@@ -1,6 +1,7 @@
 
-#include "wet.h"
+#include <glad/glad.h>
 
+#include "wet.h"
 #include "opengl.h"
 
 // -----------------------------------------------

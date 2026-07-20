@@ -3,8 +3,8 @@
 //  feito por Hayano
 //
 
-#ifndef WET_GRAPHICS_H
-#define WET_GRAPHICS_H
+#ifndef WET_RENDER_H
+#define WET_RENDER_H
 
 #include "wet.h"
 
@@ -13,11 +13,11 @@
 // ----------------------------------------------------------------------
 
 // Funções do ciclo de vida
-bool graphics_init(GraphicsAPI api);
-void graphics_shut(void);
+bool renderer_init(GraphicsAPI api);
+void renderer_shut(void);
 
-bool graphics_change_api(GraphicsAPI api);
+bool renderer_change_api(GraphicsAPI api);
 
-void graphics_on_resize(uint32 w, uint32 h);
+void renderer_on_resize(uint32 w, uint32 h);
 
-#ifndef
+#endif

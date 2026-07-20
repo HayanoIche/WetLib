@@ -1,6 +1,6 @@
+#include <glad/glad.h>
 
 #include "wet.h"
-#include "wet/log.h"
 #include "wet/surface.h"
 #include "opengl.h"
 

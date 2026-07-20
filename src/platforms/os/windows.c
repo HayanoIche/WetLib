@@ -8,7 +8,7 @@
 #include <windows.h>
 #include "wet/log.h"
 #include "wet/window.h"
-#include "wet/graphics.h"
+#include "wet/render.h"
 #include "wet/time.h"
 
 static bool window_running = true;
@@ -41,7 +41,7 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARA
                 uint32 width = LOWORD(lparam);
                 uint32 height = HIWORD(lparam);
                 
-                graphics_on_resize(width, height);
+                renderer_on_resize(width, height);
                 break;
             }
     }

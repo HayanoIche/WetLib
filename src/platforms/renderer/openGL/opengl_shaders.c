@@ -1,3 +1,4 @@
+#include <glad/glad.h>
 
 #include "wet.h"
 #include "wet/log.h"
@@ -16,7 +17,7 @@
 static uint32 compile_shader(uint32 type, const char* source)
 {
     uint32 id = glCreateShader(type);       // Criando ele na GPU
-
+    
     // Compilando o shaders
     {
         glShaderSource(id, 1, &source, NULL);   // Embutindo a string do shaders dentro do shader da GPU

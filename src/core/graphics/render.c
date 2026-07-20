@@ -1,4 +1,6 @@
 
+#include "wet.h"
+#include "wet/log.h"
 #include "wet/render.h"
 #include "./graphics.h"
 
@@ -36,6 +38,9 @@ void renderer_shut(void)
     {
         opengl_shut();
     }
+
+    // Zerando a struct de ponteiros
+    graphics_fa = (GraphicsFunctionAddresser){ 0 };
 }
 
 

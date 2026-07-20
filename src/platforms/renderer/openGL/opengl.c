@@ -5,6 +5,8 @@
 
 #include "opengl.h"
 
+#include "src/core/graphics/graphics.h"
+
 // struct do renderer
 OpenGLRenderer open_gl_renderer = { 0 };
 
@@ -76,5 +78,8 @@ void opengl_shut(void)
 
 bool opengl_functions_load(void)
 {
+    graphics_fa.draw_clear = opengl_draw_clear;
+
     return true;
 }
+

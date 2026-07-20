@@ -27,6 +27,7 @@ set files=^
         src/platforms/renderer/openGl/opengl.c^
         src/platforms/renderer/openGl/opengl_shaders.c^
         src/platforms/renderer/openGl/opengl_surface.c^
+        src/platforms/renderer/openGl/opengl_draw.c^
         src/platforms/renderer/openGl/opengl_quad.c
 
 

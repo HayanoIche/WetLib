@@ -2,7 +2,7 @@
 #include "wet.h"
 #include "wet/log.h"
 #include "wet/render.h"
-#include "./graphics.h"
+#include "graphics.h"
 
 GraphicsFunctionAddresser graphics_fa = { 0 };
 

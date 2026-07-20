@@ -9,7 +9,7 @@
 // -----------------------------------------------
 
 // Inicializando o quad
-void opengl_init_quad(void)
+void opengl_quad_init(void)
 {
     float32 vertices[] =
     {

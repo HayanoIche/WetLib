@@ -31,7 +31,7 @@ set files=^
 
 
 
-set includes=-Iincludes -I./src/thirdparty/glad/include
+set includes=-I. -Iincludes -I./src/thirdparty/glad/include
 set flags=
 
 

@@ -21,7 +21,7 @@ bool renderer_init(GraphicsAPI api)
 
     if (graphics_api == WET_GRAPHICS_API_OPENGL)
     {
-        opengl_init();
+        if (!opengl_init()) return false;
         opengl_functions_load();
 
         return true;

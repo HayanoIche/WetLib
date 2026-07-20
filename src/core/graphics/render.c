@@ -44,9 +44,20 @@ void renderer_shut(void)
 }
 
 
-bool renderer_change_api(GraphicsAPI api)
+bool renderer_change_api(GraphicsAPI new_api)
 {
-    
+    if (new_api == graphics_api) { return true; }
+
+    renderer_shut();
+
+    if (!renderer_init(new_api))
+    {
+        LOG_ERROR("CHANGE API: NEW API FAILED ON INITIALIZING!");
+        return false;
+    }
+
+    LOG_INFO("New API successfully initialized");
+    LOG_INFO("new api index: %d", graphics_api);
 }
 
 

@@ -26,6 +26,12 @@ bool opengl_init(void);
 void opengl_shut(void);
 bool opengl_functions_load(void);
 
+// -----------------------------------------------
+//  Funções de desenho do opengl
+// -----------------------------------------------
+
+void opengl_draw_clear(Color color);
+
 
 // -----------------------------------------------
 //  Shaders

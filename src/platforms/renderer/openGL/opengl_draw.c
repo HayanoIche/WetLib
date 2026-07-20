@@ -1,5 +1,6 @@
 
 #include "wet.h"
+#include "opengl.h"
 
 void opengl_draw_clear(Color color)
 {

@@ -1,6 +1,14 @@
+//
+//  Arquivo pertencente de um sub-header da WetLib
+//  feito por Hayano
+//
+
+#ifndef WET_SURFACE_H
+#define WET_SURFACE_H
 
 #include "wet.h"
 #include "wet/log.h"
+
 
 // ** adicionar aqui no futuro comentários explicando que
 // é o conceito das surfaces e cameras e como funcionam e como usar
@@ -26,3 +34,5 @@ void surface_destroy_all(const char* surface_name);
 
 // Seta a surface escolhida pra ser a surface que vai ser desenhada no momento
 void surface_set_target(const char* surface_name);
+
+#endif

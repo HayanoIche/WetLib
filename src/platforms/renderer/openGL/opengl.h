@@ -37,7 +37,7 @@ void opengl_draw_clear(Color color);
 //  Shaders
 // -----------------------------------------------
 
-uint32 opengl_shader_create_program(const char* vertex_src, const char* fragment_src);
+uint32 opengl_shader_create(const char* vertex_src, const char* fragment_src);
 
 // Vertex e Fragment shader padrão
 static const char* default_vertex_sh_source = "#version 330 core\nlayout (location = 0) in vec3 aPos;\nvoid main() {\n    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n}\n";

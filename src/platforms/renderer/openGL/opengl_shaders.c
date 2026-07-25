@@ -65,7 +65,7 @@ static uint32 compile_shader(uint32 type, const char* source)
 }
 
 // Função para linkar os shaders
-uint32 opengl_shader_create_program(const char* vertex_src, const char* fragment_src)
+uint32 opengl_shader_create(const char* vertex_src, const char* fragment_src)
 {
     uint32 program = glCreateProgram();
     uint32 vs = compile_shader(GL_VERTEX_SHADER, vertex_src);

@@ -58,7 +58,7 @@ bool opengl_init(void)
         return false;
     #endif
     
-    open_gl_renderer.default_shader_program = opengl_shader_create_program(default_vertex_sh_source, default_fragment_sh_source);
+    open_gl_renderer.default_shader_program = opengl_shader_create(default_vertex_sh_source, default_fragment_sh_source);
     LOG_INFO("[OPEN GL] Pipeline de Shaders default inicializado com sucesso! ID: %u", open_gl_renderer.default_shader_program);
     
     opengl_quad_init();

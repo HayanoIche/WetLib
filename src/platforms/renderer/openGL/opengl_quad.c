@@ -12,7 +12,7 @@
 void opengl_quad_init(void)
 {
     // Vertices do quad
-    Vertex vertices =
+    Vertex vertices[] =
     {
         //      POSIÇÃO       |           COR            |       UV      |      NORMAL
         {{-1.0f, -1.0f, 0.0f},  {1.0f, 1.0f, 1.0f, 1.0f},   {0.0f, 0.0f},  {0.0f, 0.0f, 1.0f}},

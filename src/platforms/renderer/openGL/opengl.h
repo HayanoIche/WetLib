@@ -83,4 +83,10 @@ static const char* default_fragment_sh_source =
 void opengl_quad_init(void);
 void opengl_quad_free(void);
 
+// -----------------------------------------------
+//  Surfaces
+// -----------------------------------------------
+
+bool opengl_surface_create()
+
 #endif

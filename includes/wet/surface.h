@@ -24,6 +24,8 @@
 //  chamar a função com o nome
 //
 
+#define MAX_SURFACES 10
+
 // Cria uma surface
 bool surface_create(const char* surface_name, uint32 width, uint32 height);
 

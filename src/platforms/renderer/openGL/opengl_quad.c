@@ -11,46 +11,41 @@
 // Inicializando o quad
 void opengl_quad_init(void)
 {
-    float32 vertices[] =
+    // Vertices do quad
+    Vertex vertices =
     {
-         0.5f,  0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-        -0.5f, -0.5f, 0.0f,
-        -0.5f,  0.5f, 0.0f
+        //      POSIÇÃO       |           COR            |       UV      |      NORMAL
+        {{-1.0f, -1.0f, 0.0f},  {1.0f, 1.0f, 1.0f, 1.0f},   {0.0f, 0.0f},  {0.0f, 0.0f, 1.0f}},
+        {{ 1.0f, -1.0f, 0.0f},  {1.0f, 1.0f, 1.0f, 1.0f},   {1.0f, 0.0f},  {0.0f, 0.0f, 1.0f}},
+        {{-1.0f,  1.0f, 0.0f},  {1.0f, 1.0f, 1.0f, 1.0f},   {0.0f, 1.0f},  {0.0f, 0.0f, 1.0f}},
+        {{ 1.0f,  1.0f, 0.0f},  {1.0f, 1.0f, 1.0f, 1.0f},   {1.0f, 1.0f},  {0.0f, 0.0f, 1.0f}}
     };
 
-    uint32 indices[] =
+    // Indices
+    uint8 indices[] =
     {
         0, 1, 3,
-        1, 2, 3
-    };
-    
-    // Criando o VAO, VBO, e EBO na gpu
-    glGenVertexArrays(1, &open_gl_renderer.quad_vao);
-    glGenBuffers(1, &open_gl_renderer.quad_vbo);
-    glGenBuffers(1, &open_gl_renderer.quad_ebo);
-
-    // Conectando ao VAO
-    glBindVertexArray(open_gl_renderer.quad_vao);
-
-    // Iniciando o VAO
-    {
-        // Configurando o VBO
-        // Basicamente enviando os vértices para a GPU
-        glBindBuffer(GL_ARRAY_BUFFER, open_gl_renderer.quad_vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        // Configurando o EBO
-        // Basicamente enviando os índices de conexão dos triângulos para a GPU
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, open_gl_renderer.quad_ebo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-        // O Ponteiro de Atributos
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0); // Ativa o atributo da posição 0
+        0, 2, 3
     }
+
+    // Criando e dando bind no Vertex Array
+    glGenVertexArrays(1, &open_gl_renderer.quad_vao);
+    glBindVertexArray(open_gl_renderer.quad_vao);
     
-    // Desconectando do VAO
+    // Criando o Vertex Buffer na GPU
+    glGenBuffers(1, &open_gl_renderer.quad_vbo);
+    glBindBuffer(GL_ARRAY_BUFFER, open_gl_renderer.quad_vbo);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+
+    // Mandando os indices do Element Array Buffer pra GPU
+    glGenBuffers(1, &open_gl_renderer.quad_ebo);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, open_gl_renderer.quad_ebo);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+
+    // Atributos do vertex
+    vertex_config_attributes(void)
+
+    // Desconectando do Vertex Array
     glBindVertexArray(0);
 }
 

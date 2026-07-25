@@ -69,7 +69,7 @@ bool opengl_init(void)
 void opengl_shut(void)
 {
     opengl_quad_free();
-
+    
     if (open_gl_renderer.default_shader_program != 0)
     {
         glDeleteProgram(open_gl_renderer.default_shader_program);

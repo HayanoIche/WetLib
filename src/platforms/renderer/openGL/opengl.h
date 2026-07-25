@@ -19,6 +19,34 @@ typedef struct {
 extern OpenGLRenderer open_gl_renderer;
 
 // -----------------------------------------------
+//  Vertex
+// -----------------------------------------------
+
+typedef struct {
+    float32 Position[3];   // X, Y, Z
+    float32 Color[4];      // RGBA
+    float32 TexCoords[2];  // U, V
+    float32 Normal[3];     // Normals para iluminação
+} Vertex;
+
+void vertex_config_attributes(void)
+{
+    // Posição
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Position));
+    // Cor
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
+    // Coordenadas
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, TexCoords));
+    // Normals
+    glEnableVertexAttribArray(3);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+}
+
+
+// -----------------------------------------------
 //  Funções da vida do openGL
 // -----------------------------------------------
 

@@ -26,7 +26,7 @@ void opengl_quad_init(void)
     {
         0, 1, 3,
         0, 2, 3
-    }
+    };
 
     // Criando e dando bind no Vertex Array
     glGenVertexArrays(1, &open_gl_renderer.quad_vao);
@@ -43,7 +43,7 @@ void opengl_quad_init(void)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
     // Atributos do vertex
-    vertex_config_attributes(void)
+    vertex_config_attributes();
 
     // Desconectando do Vertex Array
     glBindVertexArray(0);

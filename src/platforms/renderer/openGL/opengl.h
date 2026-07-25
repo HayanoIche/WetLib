@@ -54,8 +54,26 @@ void opengl_draw_clear(Color color);
 uint32 opengl_shader_create(const char* vertex_src, const char* fragment_src);
 
 // Vertex e Fragment shader padrão
-static const char* default_vertex_sh_source = "#version 330 core\nlayout (location = 0) in vec3 aPos;\nvoid main() {\n    gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n}\n";
-static const char* default_fragment_sh_source = "#version 330 core\nout vec4 FragColor;\nvoid main() {\n    FragColor = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n}\n";
+static const char* default_vertex_sh_source =
+"#version 330 core\n"
+"\n"
+"layout (location = 0) in vec4 position;\n"
+"\n"
+"void main()\n"
+"{\n"
+"    gl_Position = position;\n"
+"}\n";
+
+static const char* default_fragment_sh_source =
+"#version 330 core\n"
+"\n"
+"layout(location = 0) out vec4 color;\n"
+"uniform vec4 u_Color;"
+"\n"
+"void main()\n"
+"{\n"
+"    color = u_Color;\n"
+"}\n";
 
 
 // -----------------------------------------------

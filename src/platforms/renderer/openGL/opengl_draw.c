@@ -13,9 +13,11 @@ void opengl_draw_clear(Color color)
     glClearColor(r, g, b, a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-
+    // TESTES
     glUseProgram(open_gl_renderer.default_shader_program);
+    int32 location = glGetUniformLocation(open_gl_renderer.default_shader_program, "u_Color");
+    glUniform4f(location, 0.0f, 0.0f, 1.0f, 1.0f);
     glBindVertexArray(open_gl_renderer.quad_vao);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_BYTE, 0);
     glBindVertexArray(0);
 }

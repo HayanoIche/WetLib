@@ -58,6 +58,8 @@ bool renderer_change_api(GraphicsAPI new_api)
 
     LOG_INFO("New API successfully initialized");
     LOG_INFO("new api index: %d", graphics_api);
+
+    return true;
 }
 
 

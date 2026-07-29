@@ -29,11 +29,21 @@ void window_destroy(void);
 // Outros
 bool window_should_close(void);
 
+// Posição e tamanho
+void window_set_x(uint16 x);
+void window_set_y(uint16 y);
+void window_set_width(uint16 width);
+void window_set_height(uint16 height);
+
+uint16 window_get_x();
+uint16 window_get_y();
+uint16 window_get_width();
+uint16 window_get_height();
+
+
 //
 //      A implementar no futuro:
 //
-//  void window_set_position(uint8 x, uint8 y);
-//  void window_set_size(uint8 width, uint8 height);
 //  void window_set_fullscreen(bool mode);
 //  void window_set_borderless(bool mode);
 //  void window_set_resizeable(bool mode);

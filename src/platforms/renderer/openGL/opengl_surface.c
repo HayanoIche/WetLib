@@ -9,16 +9,20 @@
 #include <string.h>
 #include <stdbool.h>
 
-struct Surface {
+
+typedef struct {
     char name[32];
     uint32 fbo;
     uint32 texture;
-    int32 width;
-    int32 height;
+    uint32 rbo;
+    uint32 width;
+    uint32 height;
     bool active;
-};
+} Surface;
+
 
 static Surface surfaces[MAX_SURFACES] = { 0 };
+
 
 bool opengl_surface_create(const char* name, uint32 width, uint32 height)
 {

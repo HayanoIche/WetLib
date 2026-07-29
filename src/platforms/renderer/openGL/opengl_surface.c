@@ -43,7 +43,7 @@ bool opengl_surface_create(const char* name, uint32 width, uint32 height)
     }
 
     // Copiando as informações pra surface real
-    strncopy(surface->name, name, sizeof(surface->name) - 1);
+    strncpy(surface->name, name, sizeof(surface->name) - 1);
     surface->width = width;
     surface->height = height;
 }

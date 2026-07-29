@@ -87,6 +87,6 @@ void opengl_quad_free(void);
 //  Surfaces
 // -----------------------------------------------
 
-bool opengl_surface_create()
+bool opengl_surface_create(const char* name, uint32 width, uint32 height);
 
 #endif

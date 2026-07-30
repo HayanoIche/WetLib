@@ -33,7 +33,7 @@ static Surface* surface_find(const char* name)
 {
     if (name == NULL) { return NULL; }
 
-    for (int i = 0; i < SURFACE_MAX; i += 1)
+    for (int i = 0; i < MAX_SURFACES; i += 1)
     {
         if (surfaces[i].active)
         {
@@ -43,7 +43,7 @@ static Surface* surface_find(const char* name)
             }
         }
     }
-    
+
     return NULL;
 }
 

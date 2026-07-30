@@ -110,6 +110,30 @@ bool opengl_surface_create(const char* name, uint32 width, uint32 height)
     return true;
 }
 
+void opengl_surface_destroy(const char* name)
+{
+    Surface surface = surface_find(name);
+
+    if (!surface) { return; }
+
+    if (surface->fbo)     { glDeleteFramebuffers(1, &surface->fbo); }
+    if (surface->texture) { glDeleteTextures(1, &surface->texture_id); }
+    if (surface->rbo)     { glDeleteRenderbuffers(1, &surface->rbo); }
+
+    memset(surface, 0, sizeof(Surface));
+}
+
+void opengl_surface_destroy_all(void)
+{
+    for(int i = 0; i < MAX_SURFACES; i += 1)
+    {
+        if (surfaces[i].active)
+        {
+            opengl_surface_destroy(surfaces[i].name);
+        }
+    }
+}
+
 void opengl_surface_set_target(const char* name)
 {
     if (name == NULL)

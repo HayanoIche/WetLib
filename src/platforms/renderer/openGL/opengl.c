@@ -80,6 +80,12 @@ bool opengl_functions_load(void)
 {
     graphics_fa.draw_clear = opengl_draw_clear;
 
+    // Surfaces
+    graphics_fa.surface_create = opengl_surface_create;
+    graphics_fa.surface_destroy = opengl_surface_destroy;
+    graphics_fa.surface_destroy_all = opengl_surface_destroy_all;
+    graphics_fa.surface_set_target = opengl_surface_set_target;
+
     return true;
 }
 

@@ -2,6 +2,7 @@
 
 #include "wet.h"
 #include "wet/surface.h"
+#include "wet/window.h"
 #include "opengl.h"
 
 #include <stdlib.h>
@@ -22,6 +23,7 @@ typedef struct {
 
 
 static Surface surfaces[MAX_SURFACES] = { 0 };
+static Surface* current_target = NULL;
 
 // ----------------------------------------------------------------------
 //  Função de auxilio
@@ -106,4 +108,28 @@ bool opengl_surface_create(const char* name, uint32 width, uint32 height)
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     return true;
+}
+
+void opengl_surface_set_target(const char* name)
+{
+    if (name == NULL)
+    {
+        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+        glViewport(0, 0, window_get_width(), window_get_height());
+        current_target = NULL;
+        return;
+    }
+
+    Surface* surface = surface_find(name);
+
+    if (!surface)
+    {
+        LOG_ERROR("[OPEN GL] Impossivel definir a surface '%s' como target. Surface não encontrada.", name);
+        return;
+    }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, surface->fbo);
+    glViewport(0, 0, surface->width, surface->height);
+    current_target = surface;
+
 }

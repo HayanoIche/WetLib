@@ -88,5 +88,8 @@ void opengl_quad_free(void);
 // -----------------------------------------------
 
 bool opengl_surface_create(const char* name, uint32 width, uint32 height);
+void opengl_surface_destroy(const char* name);
+void opengl_surface_destroy_all(void);
+void opengl_surface_set_target(const char* name);
 
 #endif

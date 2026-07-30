@@ -4,6 +4,7 @@
 #include "wet/draw.h"
 #include "wet/time.h"
 #include "wet/render.h"
+#include "wet/surface.h"
 
 int main()
 {
@@ -11,7 +12,7 @@ int main()
     if (window_create(config) == false) { LOG_ERROR("falha na janela!"); }
 
     fps_set_target(60);
-
+    
     if (!renderer_init(WET_GRAPHICS_API_OPENGL)) { return -1; }
 
     while (!window_should_close())

@@ -23,6 +23,32 @@ typedef struct {
 
 static Surface surfaces[MAX_SURFACES] = { 0 };
 
+// ----------------------------------------------------------------------
+//  Função de auxilio
+// ----------------------------------------------------------------------
+
+static Surface* surface_find(const char* name)
+{
+    if (name == NULL) { return NULL; }
+
+    for (int i = 0; i < SURFACE_MAX; i += 1)
+    {
+        if (surfaces[i].active)
+        {
+            if (strcmp(name, surfaces[i].name) == 0)
+            {
+                return &surfaces[i];
+            }
+        }
+    }
+    
+    return NULL;
+}
+
+
+// ----------------------------------------------------------------------
+//  Implementação das funções
+// ----------------------------------------------------------------------
 
 bool opengl_surface_create(const char* name, uint32 width, uint32 height)
 {

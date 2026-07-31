@@ -32,7 +32,7 @@ bool surface_create(const char* surface_name, uint32 width, uint32 height);
 // Destroi uma surface específica
 void surface_destroy(const char* surface_name);
 // Destroi todas as surfaces
-void surface_destroy_all(const char* surface_name);
+void surface_destroy_all(void);
 
 // Seta a surface escolhida pra ser a surface que vai ser desenhada no momento
 void surface_set_target(const char* surface_name);

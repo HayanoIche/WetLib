@@ -17,13 +17,10 @@ echo WetLib - Iniciando compilacao
 :: Arquivos a compilar, includes e flags ::
 set files=^
         src/thirdparty/glad/src/glad.c^
-        src/core/log.c^
-        src/core/window.c^
-        src/core/time.c^
-        src/core/graphics/draw.c^
-        src/core/graphics/surface.c^
-        src/core/graphics/render.c^
         src/platforms/os/windows.c^
+        src/core/log.c^
+        src/core/time.c^
+        src/core/graphics.c^
         src/platforms/renderer/openGl/opengl.c^
         src/platforms/renderer/openGl/opengl_shaders.c^
         src/platforms/renderer/openGl/opengl_surface.c^
@@ -58,3 +55,4 @@ move *.a output >nul
 del *.o
 
 echo WetLib - compilacao concluida com sucesso!
+

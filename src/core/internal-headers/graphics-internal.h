@@ -1,6 +1,6 @@
 
-#ifndef WET_GRAPHICS_H
-#define WET_GRAPHICS_H
+#ifndef WET_RENDER_H
+#define WET_RENDER_H
 
 #include "wet.h"
 
@@ -12,7 +12,7 @@ typedef struct
     void (*renderer_shut) (void);
     bool (*renderer_change_api) (GraphicsAPI api);
     void (*renderer_on_resize) (uint32 w, uint32 h);
-
+    
     // Draw
     void (*draw_clear) (Color color);
 
@@ -25,5 +25,12 @@ typedef struct
 } GraphicsFunctionAddresser;
 
 extern GraphicsFunctionAddresser graphics_fa;
+
+// OpenGL
+bool opengl_init(void);
+void opengl_shut(void);
+bool opengl_functions_load(void);
+
+
 
 #endif

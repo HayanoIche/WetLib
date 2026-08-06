@@ -27,7 +27,7 @@
 #define MAX_SURFACES 10
 
 // Cria uma surface
-bool surface_create(const char* surface_name, uint32 width, uint32 height);
+bool surface_create(const char* surface_name, Vec2 size);
 
 // Destroi uma surface específica
 void surface_destroy(const char* surface_name);

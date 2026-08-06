@@ -6,28 +6,47 @@
 #define NOMINMAX
 
 #include <windows.h>
+
 #include "wet/log.h"
+#include "wet/graphics.h"
 #include "wet/window.h"
-#include "wet/render.h"
-#include "wet/time.h"
 
-static bool window_running = true;
+#include "src/core/internal-headers/window-internal.h"
 
-static HWND window = NULL;
-static HDC hdc = NULL;
-static HGLRC hglrc = NULL;
+
+typedef struct {
+
+    HWND hwnd;
+    HDC hdc;
+    HGLRC hglrc;
+
+    uint16 x;
+    uint16 y;
+    uint16 width;
+    uint16 height;
+
+    char* caption;
+
+    bool fullscreen;
+    bool borderless;
+
+    bool running;
+    bool started;
+
+} Win32Window;
+
+static Win32Window window = { 0 };
 
 // ----------------------------------------------------------------------
 //  Funções pra manejar a janela do win32
 // ----------------------------------------------------------------------
 
 // Callback do windows
-LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
-{
+LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) {
     switch (msg)
     {
         case WM_CLOSE:
-            window_running = false;
+            window.running = false;
             DestroyWindow(hwnd);
             return 0;
             break;
@@ -40,26 +59,23 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARA
         case WM_SIZE: {
                 uint32 width = LOWORD(lparam);
                 uint32 height = HIWORD(lparam);
-                
-                renderer_on_resize(width, height);
                 break;
             }
     }
     
-    // Qualquer mensagem que a gente não tratar, deixa o Windows resolver do jeito padrão
+    // Qualquer mensagem não tratada retorna o default
     return DefWindowProcA(hwnd, msg, wparam, lparam);
 }
 
 // Função que cria a janela no windows com o win32
-bool win32_window_create(WindowConfig config)
-{
+bool window_create(void) {
     HINSTANCE instance = GetModuleHandleA(0);
 
     WNDCLASS wc = {0};
     wc.hInstance = instance;
     wc.hIcon = LoadIcon(instance, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
-    wc.lpszClassName = config.title;
+    wc.lpszClassName = window.caption;
     wc.hbrBackground = NULL;
     wc.lpfnWndProc = win32_process_message; // Callback pros inputs
 
@@ -71,69 +87,65 @@ bool win32_window_create(WindowConfig config)
 
     int dwStyle = WS_OVERLAPPEDWINDOW;
 
-    window = CreateWindowExA(
+    window.hwnd = CreateWindowExA(
                     0,
-                    config.title,
-                    config.title,
+                    window.caption,
+                    window.caption,
                     dwStyle,
                     CW_USEDEFAULT, CW_USEDEFAULT,
-                    config.width,
-                    config.height,
+                    window.width,
+                    window.height,
                     NULL,
                     NULL,
                     instance,
                     NULL
                 );
-    if (window == NULL)
+    
+    if (window.hwnd == NULL)
     {
         LOG_FATAL("FALHA AO CRIAR A JANELA DO WIN32! código: %lu\n", GetLastError());
         return false;
     }
 
-    ShowWindow(window, SW_SHOW);
+    ShowWindow(window.hwnd, SW_SHOW);
     LOG_INFO("Janela do win32 inicializada com sucesso!");
     
-    // Iniciando o contador de tempo
-    time_init();
-
+    window.running = true;
     return true;
-}
+};
 
-void win32_window_update(void)
-{
-    // Updatando o tempo
-    time_update();
 
+void window_update(void) {
+    
     // Window
     MSG msg;
 
-    while(PeekMessageA(&msg, window, 0, 0, PM_REMOVE))
+    while(PeekMessageA(&msg, window.hwnd, 0, 0, PM_REMOVE))
     {
         TranslateMessage(&msg);
         DispatchMessageA(&msg); //Chama o callback que foi especificado quando criamos a janela
     }
     
-    SwapBuffers(hdc);
+    SwapBuffers(window.hdc);
 };
 
-void win32_window_destroy(void)
-{
+
+void window_destroy(void) {
     // Acabando com o contador de tempo
     time_shut();
 };
 
-bool win32_window_should_close(void)
-{
-    return !window_running;
-}
+
+bool window_should_close(void) {
+    return !window.running;
+};
 
 // ----------------------------------------------------------------------
 //  Implementação das funções do OPENGL
 // ----------------------------------------------------------------------
 
-bool win32_opengl_graphics_init(void) 
-{
-    hdc = GetDC(window);
+bool win32_opengl_graphics_init(void) {
+    window.hdc = GetDC(window.hwnd);
 
     PIXELFORMATDESCRIPTOR pfd = {
         .nSize = sizeof(PIXELFORMATDESCRIPTOR),
@@ -146,22 +158,22 @@ bool win32_opengl_graphics_init(void)
         .iLayerType = PFD_MAIN_PLANE
     };
 
-    int pixelFormat = ChoosePixelFormat(hdc, &pfd);
-    SetPixelFormat(hdc, pixelFormat, &pfd);
+    int pixelFormat = ChoosePixelFormat(window.hdc, &pfd);
+    SetPixelFormat(window.hdc, pixelFormat, &pfd);
 
     // CRIA O CONTEXTO OPENGL REAL DO WINDOWS
-    hglrc = wglCreateContext(hdc);
-    if (!hglrc) return false;
+    window.hglrc = wglCreateContext(window.hdc);
+    if (!window.hglrc) return false;
 
     // Faz o contexto ficar ativo na nossa thread atual
-    wglMakeCurrent(hdc, hglrc);
+    wglMakeCurrent(window.hdc, window.hglrc);
 
     return true;
 }
 
-void* win32_opengl_get_proc_address(const char* procname)
-{
+void* win32_opengl_get_proc_address(const char* procname) {
     void* p = (void*)wglGetProcAddress(procname);
+
     if (p == 0 || (p == (void*)0x1) || (p == (void*)0x2) || (p == (void*)0x3) || (p == (void*)-1))
     {
         static HMODULE module = NULL;
@@ -170,7 +182,47 @@ void* win32_opengl_get_proc_address(const char* procname)
         }
         p = (void*)GetProcAddress(module, procname);
     }
+
     return p;
 }
+
+
+// ----------------------------------------------------------------------
+//  Funções de configuração da janela
+// ----------------------------------------------------------------------
+
+void window_set_position(Vec2 position) {
+    window.x = (uint16) position.x;
+    window.y = (uint16) position.y;
+
+    if (window.started)
+    {
+        // Código que realmente muda a posição
+    }
+}
+
+void window_set_size(Vec2 size) {
+    window.width  = (uint16) size.x;
+    window.height = (uint16) size.y;
+
+    if (window.started)
+    {
+        // Código que realmente faz o resize
+    }
+}
+
+void window_set_fullscreen(bool mode) {
+    window.fullscreen = mode;
+}
+
+void window_set_caption(const char* title) {
+    window.caption = (char*)title;
+}
+
+
+Vec2 window_get_position(void) {return (Vec2) {0, 0}; }
+Vec2 window_get_size(void) {return (Vec2) {0, 0}; }
+bool window_get_fullscreen(void) {return false; }
+const char* window_get_caption(void) {return ""; }
 
 #endif

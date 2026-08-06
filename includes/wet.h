@@ -1,7 +1,9 @@
-//
-//  Arquivo principal da WetLib
-//  feitor por Hayano
-//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+//  Arquivo header principal da WetLib
+//  Feito por Hayano
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef WET_H
 #define WET_H
@@ -10,9 +12,9 @@
 #include <stdbool.h>
 #include <stddef.h>
 
-// ----------------------------------------------------------------------
-//  Pegando a plataforma alvo e definindo as macros de plataforma
-// ----------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Macros de cada plataforma
 
 #if defined(_WIN32) || defined(_WIN64)          // Windows
     #define WET_PLATFORM_WINDOWS
@@ -20,25 +22,24 @@
     #define WET_PLATFORM_LINUX
 #elif defined(__APPLE__) || defined(__MACH__)   // MacOs
     #define WET_PLATFORM_MACOS
-
 #else
     // Plataforma não suportada
 #endif
 
 
-// ----------------------------------------------------------------------
-//  ENUM das apis de gráfico disponíveis
-// ----------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Apis de gráfico disponíveis
 
 typedef enum {
-    WET_GRAPHICS_API_OPENGL,
-    WET_GRAPHICS_API_VULKAN,
-    WET_GRAPHICS_API_DIRECTX
+    GRAPHICS_API_OPENGL,
+    GRAPHICS_API_VULKAN,    // Futuramente
+    GRAPHICS_API_DIRECTX    // Futuramente
 } GraphicsAPI;
 
-// ----------------------------------------------------------------------
-//  Renomeando tipos específicos para algo mais simples e utilizável
-// ----------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Inteiros de tamanhos específicos renomeados por conveniência
 
 typedef int8_t   int8;
 typedef int16_t  int16;
@@ -53,20 +54,13 @@ typedef uint64_t uint64;
 typedef float    float32;
 typedef double   float64;
 
-// ----------------------------------------------------------------------
-//  Structs padrões da biblioteca
-// ----------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Struct para vetores bidimensionais
 typedef struct {
     float32 x;
     float32 y;
 } Vec2;
-
-typedef struct {
-    int32 x;
-    int32 y;
-} Vec2i;
 
 // Struct para vetores tridimensional
 typedef struct {
@@ -75,31 +69,17 @@ typedef struct {
     float32 z;
 } Vec3;
 
+// Struct para retangulos
 typedef struct {
     float32 x;
     float32 y;
-    float32 z;
-} Vec3i;
-
-// Struct para retangulos
-typedef struct {
-    float32 x1;
-    float32 y1;
-    float32 x2;
-    float32 y2;
+    float32 width;
+    float32 height;
 } Rect;
 
-typedef struct {
-    int32 x1;
-    int32 y1;
-    int32 x2;
-    int32 y2;
-} Recti;
 
 
-// ----------------------------------------------------------------------
-//  Cores
-// ----------------------------------------------------------------------
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Struct para cores
 typedef struct {

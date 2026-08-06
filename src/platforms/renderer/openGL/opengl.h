@@ -31,15 +31,6 @@ typedef struct {
 
 void vertex_config_attributes(void);
 
-
-// -----------------------------------------------
-//  Funções da vida do openGL
-// -----------------------------------------------
-
-bool opengl_init(void);
-void opengl_shut(void);
-bool opengl_functions_load(void);
-
 // -----------------------------------------------
 //  Funções de desenho do opengl
 // -----------------------------------------------

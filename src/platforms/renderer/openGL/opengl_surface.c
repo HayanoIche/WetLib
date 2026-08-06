@@ -25,6 +25,7 @@ typedef struct {
 static Surface surfaces[MAX_SURFACES] = { 0 };
 static Surface* current_target = NULL;
 
+
 // ----------------------------------------------------------------------
 //  Função de auxilio
 // ----------------------------------------------------------------------
@@ -139,8 +140,15 @@ void opengl_surface_set_target(const char* name)
     if (name == NULL)
     {
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, window_get_width(), window_get_height());
+
+        Vec2 size = window_get_size();
+
+        uint16 w = size.x;
+        uint16 h = size.y;
+
+        glViewport(0, 0, w, h);
         current_target = NULL;
+
         return;
     }
 

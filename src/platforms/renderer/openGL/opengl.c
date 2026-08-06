@@ -5,7 +5,8 @@
 
 #include "opengl.h"
 
-#include "src/core/graphics/graphics.h"
+#include "src/core/internal-headers/graphics-internal.h"
+#include "src/core/internal-headers/window-internal.h"
 
 // struct do renderer
 OpenGLRenderer open_gl_renderer = { 0 };
@@ -13,16 +14,6 @@ OpenGLRenderer open_gl_renderer = { 0 };
 // ----------------------------------------------------------------------
 //  Declarando as funções do open GL específicas de cada plataforma
 // ----------------------------------------------------------------------
-
-#if defined(WET_PLATFORM_WINDOWS)
-    bool win32_opengl_graphics_init(void);
-    void* win32_opengl_get_proc_address(const char* procname);
-#elif defined(WET_PLATFORM_LINUX)
-    // Funções pra carregar o openGL no linux
-#elif defined(WET_PLATFORM_MACOS)
-    // Funções pra carregar o openGL no MacOS
-#endif
-
 
 // ----------------------------------------------------------------------
 //  Implementando as funções do open GL

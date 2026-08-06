@@ -1,55 +1,42 @@
-//
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 //  Arquivo pertencente de um sub-header da WetLib
 //  feito por Hayano
-//
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #ifndef WET_WINDOW_H
 #define WET_WINDOW_H
 
 #include "wet.h"
 
-// Estrutura básica de configuração da janela
-typedef struct {
-    uint16 width;
-    uint16 height;
-    const char* title;
-    bool fullscreen;
-} WindowConfig;
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+// -------------- SETTERS --------------
 
-// ----------------------------------------------------------------------
-//  Funções publicas pro uso da janela
-// ----------------------------------------------------------------------
+void window_set_position(Vec2 position);
+void window_set_size(Vec2 size);
+void window_set_fullscreen(bool mode);
+void window_set_caption(const char* title);
 
-// Ciclo de vida da janela
-bool window_create(WindowConfig config);
-void window_update(void);
-void window_destroy(void);
+// -------------- GETTERS --------------
 
-// Outros
-bool window_should_close(void);
+Vec2 window_get_position(void);
+Vec2 window_get_size(void);
+bool window_get_fullscreen(void);
+const char* window_get_caption(void);
 
-// Posição e tamanho
-void window_set_x(uint16 x);
-void window_set_y(uint16 y);
-void window_set_width(uint16 width);
-void window_set_height(uint16 height);
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-uint16 window_get_x();
-uint16 window_get_y();
-uint16 window_get_width();
-uint16 window_get_height();
+// -------------- FPS --------------
 
+void fps_set_target(uint16 fps);
+uint16 fps_get_target(void);
+uint16 fps_get(void);
+uint16 fps_real_get(void);
 
-//
-//      A implementar no futuro:
-//
-//  void window_set_fullscreen(bool mode);
-//  void window_set_borderless(bool mode);
-//  void window_set_resizeable(bool mode);
-//  void window_set_caption(const char* title);
-//
-//  também os getters desses setters
-//
+float64 delta_time_get(void);
+#define DELTA_TIME delta_time_get()
+
 
 #endif

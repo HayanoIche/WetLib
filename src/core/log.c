@@ -23,20 +23,17 @@ static const char* log_level_texts[] = {
     "[FATAL ERROR] "
 };
 
-
 // ----------------------------------------------------------------------
 //  Implementação das Funções
 // ----------------------------------------------------------------------
 
 // Função pra definir quais avisos vai receber (todos, até só fatais, ou nenhum)
-void log_set_level(WetLogLevel level)
-{
+void log_set_level(WetLogLevel level) {
     minimum_log_level = level;
 }
 
 // Função que printa a mensagem
-void log_print(WetLogLevel level, const char* message, ...)
-{
+void log_print(WetLogLevel level, const char* message, ...) {
     if (level < minimum_log_level || level == WET_LOG_LEVEL_NONE) {
         return;
     }
@@ -54,8 +51,7 @@ void log_print(WetLogLevel level, const char* message, ...)
     printf("\033[0m\n");
 }
 
-void log_clear_terminal(void)
-{
+void log_clear_terminal(void) {
     printf("\033[2J\033[H");
     fflush(stdout);
 }

@@ -1,6 +1,6 @@
 #include "wet.h"
 #include "wet/log.h"
-#include "wet/time.h"
+#include "wet/window.h"
 
 #if defined(WET_PLATFORM_WINDOWS)
     #include <windows.h>
@@ -44,8 +44,8 @@ static TimeManager time_manager = { 0 };
 // - Hayano
 //
 
-static float64 get_time_in_seconds(void)
-{
+static float64 get_time_in_seconds(void) {
+
     #if defined(WET_PLATFORM_WINDOWS)
         static LARGE_INTEGER frequency; // Tipo da propria microsoft (mas é basicamente um int64)
         static bool has_quad = false;
@@ -82,8 +82,8 @@ static float64 get_time_in_seconds(void)
 //  - Hayano
 //
 
-static void wait_time(double seconds)
-{
+static void wait_time(double seconds) {
+
     if (seconds <= 0.0) return;
 
     #if defined(WET_PLATFORM_WINDOWS)
@@ -101,8 +101,8 @@ static void wait_time(double seconds)
 
 // Ciclo de vida
 // Iniciando o contador de tempo
-void time_init(void)
-{
+void time_init(void) {
+
     #if defined(WET_PLATFORM_WINDOWS)
         //
         //      Essa função do <mmsystem.h> serve pra dar mais
@@ -116,8 +116,8 @@ void time_init(void)
 
 
 // Finalizando o contador de tempo
-void time_shut(void)
-{
+void time_shut(void) {
+
     #if defined(WET_PLATFORM_WINDOWS)
         // Desliga aquela alta precisão do sleep ao fechar o programa
         timeEndPeriod(1);
@@ -126,8 +126,8 @@ void time_shut(void)
 
 
 // Da o update de cada frame
-void time_update(void)
-{
+void time_update(void) {
+
     float64 current_time = get_time_in_seconds();
 
     // Processamento do frame passado
@@ -180,8 +180,8 @@ void time_update(void)
 // Funções pra pegar os parametros do time manager
 
 // Função pra settar o FPS máximo que o programa pode ter (o fps alvo)
-void fps_set_target(uint16 fps)
-{
+void fps_set_target(uint16 fps) {
+    
     if (fps <= 0)
     {
         time_manager.target_time = 0.0;

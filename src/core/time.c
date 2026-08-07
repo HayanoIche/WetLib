@@ -101,17 +101,19 @@ static void wait_time(double seconds) {
 
 // Ciclo de vida
 // Iniciando o contador de tempo
-void time_init(void) {
-
+bool time_init(void) {
+    
     #if defined(WET_PLATFORM_WINDOWS)
         //
         //      Essa função do <mmsystem.h> serve pra dar mais
         //  precisão pro sleep (precisão de 1 milissegundo)
         //
         timeBeginPeriod(1);
-
+        
     #endif
         time_manager.last_progress_time = get_time_in_seconds();
+    
+    return true;
 }
 
 

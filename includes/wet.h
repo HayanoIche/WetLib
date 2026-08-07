@@ -14,7 +14,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Macros de cada plataforma
+// -------------- PLATAFORMAS --------------
 
 #if defined(_WIN32) || defined(_WIN64)          // Windows
     #define WET_PLATFORM_WINDOWS
@@ -29,7 +29,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Apis de gráfico disponíveis
+// -------------- APIS DE GRÁFICO --------------
 
 typedef enum {
     GRAPHICS_API_OPENGL,
@@ -39,7 +39,7 @@ typedef enum {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Inteiros de tamanhos específicos renomeados por conveniência
+// -------------- TIPOS RENOMEADOS --------------
 
 typedef int8_t   int8;
 typedef int16_t  int16;
@@ -56,20 +56,30 @@ typedef double   float64;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Struct para vetores bidimensionais
+// -------------- VECTORS --------------
+
+// Vector 2
 typedef struct {
     float32 x;
     float32 y;
 } Vec2;
 
-// Struct para vetores tridimensional
+// Vector 3
 typedef struct {
     float32 x;
     float32 y;
     float32 z;
 } Vec3;
 
-// Struct para retangulos
+// Vector 4
+typedef struct {
+    float32 x;
+    float32 y;
+    float32 z;
+    float32 w;
+} Vec4;
+
+// Rectangle
 typedef struct {
     float32 x;
     float32 y;
@@ -78,10 +88,11 @@ typedef struct {
 } Rect;
 
 
-
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-// Struct para cores
+// -------------- CORES --------------
+
+// Struct da cor
 typedef struct {
     uint8 r;
     uint8 g;

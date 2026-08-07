@@ -59,6 +59,11 @@ void graphics_shut(void)
 }
 
 
+void draw_clear(Color color)
+{
+    return graphics_fa.draw_clear(color);
+}
+
 
 
 

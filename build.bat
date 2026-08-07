@@ -56,3 +56,8 @@ del *.o
 
 echo WetLib - compilacao concluida com sucesso!
 
+cd "tests"
+
+call "buildtest.bat"
+start /wait "" "test.exe"
+

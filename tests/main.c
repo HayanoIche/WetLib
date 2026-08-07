@@ -14,6 +14,7 @@ int main()
     while (graphics_is_running())
     {
         graphics_update();
+        LOG_INFO("\n%d\n", graphics_is_running());
     }
 
     graphics_shut();

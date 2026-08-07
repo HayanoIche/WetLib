@@ -48,13 +48,14 @@ void graphics_update(void)
 
 bool graphics_is_running(void)
 {
-    return true;
+    return !window_should_close();
 }
 
 
 void graphics_shut(void)
 {
-
+    window_destroy();
+    time_shut();
 }
 
 

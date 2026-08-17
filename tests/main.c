@@ -2,11 +2,12 @@
 #include "wet/log.h"
 #include "wet/window.h"
 #include "wet/graphics.h"
+#include "wet/draw.h"
 
 int main()
 {
     window_set_caption("Jogo");
-    window_set_size((Vec2){640, 480});
+    window_set_size((Vec2) {640, 480});
     fps_set_target(60);
     
     graphics_init();
@@ -15,6 +16,7 @@ int main()
     {
         graphics_update();
         LOG_INFO("\n%d\n", graphics_is_running());
+        draw_clear((Color) {20, 30, 60, 255});
     }
 
     graphics_shut();

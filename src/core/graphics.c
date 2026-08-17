@@ -11,10 +11,10 @@
 GraphicsFunctionAddresser graphics_fa = { 0 };
 static GraphicsAPI graphics_api;
 
-// Função que inicia tudo relacionado a gráficos da engine
+// -------------- INICIALIZAÇÃO DOS GRÁFICOS --------------
 
-bool graphics_init(void) {
-
+bool graphics_init(void)
+{
     // -------------- JANELA --------------
     if (!window_create())
     {

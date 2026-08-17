@@ -68,23 +68,24 @@ LRESULT CALLBACK win32_process_message(HWND hwnd, UINT msg, WPARAM wparam, LPARA
 }
 
 // Função que cria a janela no windows com o win32
-bool window_create(void) {
+bool window_create(void)
+{
     HINSTANCE instance = GetModuleHandleA(0);
-
     WNDCLASS wc = {0};
+    
     wc.hInstance = instance;
     wc.hIcon = LoadIcon(instance, IDI_APPLICATION);
     wc.hCursor = LoadCursor(NULL, IDC_ARROW);
     wc.lpszClassName = window.caption;
     wc.hbrBackground = NULL;
     wc.lpfnWndProc = win32_process_message; // Callback pros inputs
-
+    
     if (!RegisterClassA(&wc))
     {
         LOG_FATAL("FALHA AO REGISTRAR A CLASSE DO WIN32! código: %lu\n", GetLastError());
         return false;
     }
-
+    
     int dwStyle = WS_OVERLAPPEDWINDOW;
 
     window.hwnd = CreateWindowExA(

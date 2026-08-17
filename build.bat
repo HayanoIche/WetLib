@@ -59,5 +59,13 @@ echo WetLib - compilacao concluida com sucesso!
 cd "tests"
 
 call "buildtest.bat"
-start /wait "" "test.exe"
+
+IF EXIST "test.exe" (
+    start /wait "" "test.exe"
+) ELSE (
+    echo ERRO FATAL! ARQUIVO NAO FOI COMPILADO
+)
+
+del test.exe
+cd ..
 

@@ -19,6 +19,7 @@ set files=^
         src/thirdparty/glad/src/glad.c^
         src/platforms/os/windows.c^
         src/core/log.c^
+        src/core/math.c^
         src/core/time.c^
         src/core/graphics.c^
         src/platforms/renderer/openGl/opengl.c^
@@ -49,7 +50,7 @@ echo Compilado Arquivos...
 
 if not exist output mkdir output
 
-ar rcs libwet.a glad.o windows.o log.o time.o graphics.o opengl.o opengl_shaders.o opengl_surface.o opengl_draw.o opengl_quad.o
+ar rcs libwet.a glad.o windows.o log.o time.o math.o graphics.o opengl.o opengl_shaders.o opengl_surface.o opengl_draw.o opengl_quad.o
 
 move *.a output >nul
 del *.o
